@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+.app__wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 20px 15px 0;
+  font-family: 'Roboto';
+  background: #25C2A0;
+}
