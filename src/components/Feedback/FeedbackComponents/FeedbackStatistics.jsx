@@ -1,5 +1,7 @@
-import Style from '../Feedback.module.css';
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import Style from '../Feedback.module.css';
 
 export const FeedbackStatistics = ({
   good,
@@ -32,4 +34,9 @@ export const FeedbackStatistics = ({
       )}
     </>
   );
+};
+FeedbackStatistics.propTypes = {
+  good: PropTypes.number,
+  bad: PropTypes.number,
+  neutral: PropTypes.number,
 };

@@ -1,0 +1,20 @@
+.phonebook__body {
+  width: 400px;
+  background: #fff;
+  padding: 20px;
+  margin: 0 auto;
+}
+.phonebook__title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+.phonebook__text {
+  margin-bottom: 5px;
+  font-size: 18px;
+  padding-right: 5px;
+}
+.phonebook__form {
+  display: flex;
+  justify-content: space-between;
+}
