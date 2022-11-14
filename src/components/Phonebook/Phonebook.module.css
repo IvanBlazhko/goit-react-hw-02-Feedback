@@ -13,8 +13,34 @@
   margin-bottom: 5px;
   font-size: 18px;
   padding-right: 5px;
-}
-.phonebook__form {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
+.phonebook__contacts {
+  margin-top: 15px;
+}
+.phonebook__contact {
+  display: flex;
+}
+.phonebook__name {
+  flex: 1 1 50%;
+  margin-bottom: 10px;
+}
+.phonebook__phone {
+  flex: 1 1 50%;
+  margin-bottom: 10px;
+}
+.phonebook__btn {
+  background: #4054AE;
+  padding: 10px;
+  border-radius: 15px;
+  color: white;
+}
+.phonebook__input {
+  border: 1px solid black;
+  margin-left: 10px;
+  flex: 1 1 100%;
+  padding: 2px;
+}
+
