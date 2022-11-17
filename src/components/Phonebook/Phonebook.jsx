@@ -1,77 +1,73 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Style from './Phonebook.module.css';
-import PhonebookContact from './PhonebookComponents/PhonebookContact';
+import PhonebookForm from './PhonebookComponents/PhonebookForm';
+import PhonebookSearch from './PhonebookComponents/PhonebookSearch';
+import PhonebookContacts from './PhonebookComponents/PhonebookContacts';
 
-export const Phonebook = ({
-  title,
-  stateContacts,
-  statePhone,
-  stateName,
-  stateSearch,
-  handelInputValue,
-  Submit,
-}) => {
-  return (
-    <div className={Style.phonebook__body}>
-      <h1 className={Style.phonebook__title}>{title}</h1>
-      <div>
-        <form onSubmit={Submit}>
-          <label htmlFor="" className={Style.phonebook__text}>
-            Name
-            <input
-              type="text"
-              name="name"
-              onChange={handelInputValue}
-              value={stateName}
-              className={Style.phonebook__input}
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
+class Phonebook extends Component {
+  state = {
+    name: '',
+    tel: '',
+  };
+  handelSubmit = event => {
+    event.preventDefault();
+    this.props.addTodoContact(this.state.name, this.state.tel);
+    this.reset();
+  };
+  reset = () => {
+    this.setState({ name: '', tel: '' });
+  };
+  handelInputValue = event => {
+    const { name, value } = event.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  render() {
+    const {
+      title,
+      stateContacts,
+      stateSearch,
+      handelSearchValue,
+      onDeleteContact,
+    } = this.props;
+    const { name, tel } = this.state;
+    return (
+      <div className={Style.phonebook__body}>
+        <h1 className={Style.phonebook__title}>{title}</h1>
+        <div>
+          <PhonebookForm
+            stateName={name}
+            statePhone={tel}
+            handelInputValue={this.handelInputValue}
+            onSubmit={this.handelSubmit}
+          />
+          <ul className={Style.phonebook__contacts}>
+            <h2 className={Style.phonebook__title}>Contacts</h2>
+            <PhonebookSearch
+              stateSearch={stateSearch}
+              handelSearchValue={handelSearchValue}
             />
-          </label>
-          <label htmlFor="" className={Style.phonebook__text}>
-            Phone
-            <input
-              onChange={handelInputValue}
-              value={statePhone}
-              className={Style.phonebook__input}
-              type="tel"
-              name="tel"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
+            <PhonebookContacts
+              stateContacts={stateContacts}
+              onDeleteContact={onDeleteContact}
             />
-          </label>
-          <button type="submit" className={Style.phonebook__btn}>
-            Add contact
-          </button>
-        </form>
-        <ul className={Style.phonebook__contacts}>
-          <h2 className={Style.phonebook__title}>Contacts</h2>
-          <label className={Style.phonebook__text}>
-            Search
-            <input
-              type="text"
-              name="search"
-              onChange={handelInputValue}
-              value={stateSearch}
-              className={Style.phonebook__input}
-              required
-            />
-          </label>
-          {stateContacts.map(({ name, id, phone }) => (
-            <PhonebookContact name={name} key={id} phone={phone} />
-          ))}
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Phonebook;
 
 Phonebook.propTypes = {
   title: PropTypes.string,
+  stateSearch: PropTypes.string,
+  stateContacts: PropTypes.array,
+  handelSearchValue: PropTypes.func,
+  onDeleteContact: PropTypes.func,
 };

@@ -3,26 +3,14 @@ import { nanoid } from 'nanoid';
 
 import Feedback from '../Feedback/Feedback';
 import Phonebook from '../Phonebook/Phonebook';
+import PhonebookDefaultData from '../Phonebook/PhonebookDefaultData.json';
 
 import Style from './App.module.css';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', phone: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', phone: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', phone: '227-91-26' },
-    ],
-    name: '',
-    tel: '',
+    contacts: [...PhonebookDefaultData],
     search: '',
-  };
-  handelInputValue = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({
-      [name]: value,
-    });
   };
   addTodo = (name, phone) => {
     const todo = {
@@ -30,31 +18,43 @@ class App extends Component {
       name,
       phone,
     };
+    if (this.state.contacts.find(i => i.name === name)) {
+      return alert(name + ' is already in contacts');
+    }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, todo],
     }));
   };
-  handelSubmit = event => {
-    event.preventDefault();
-    this.addTodo(this.state.name, this.state.tel);
-    this.reset();
+  onDeleteContact = Id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== Id),
+    }));
   };
-  reset = () => {
-    this.setState({ name: '', tel: '' });
+  getVisibleContacts = () => {
+    const { search, contacts } = this.state;
+    const normalizeFilter = search.toLowerCase();
+    return contacts.filter(todo =>
+      todo.name.toLowerCase().includes(normalizeFilter)
+    );
   };
-
+  handelSearchValue = event => {
+    this.setState({
+      search: event.currentTarget.value,
+    });
+  };
   render() {
+    const { search } = this.state;
+    const visibleContacts = this.getVisibleContacts();
     return (
       <div className={Style.app__wrapper}>
         <Feedback />
         <Phonebook
           title="My phonebook"
-          stateName={this.state.name}
-          statePhone={this.state.tel}
-          stateSearch={this.state.search}
-          stateContacts={this.state.contacts}
-          handelInputValue={this.handelInputValue}
-          Submit={this.handelSubmit}
+          stateSearch={search}
+          stateContacts={visibleContacts}
+          addTodoContact={this.addTodo}
+          handelSearchValue={this.handelSearchValue}
+          onDeleteContact={this.onDeleteContact}
         />
       </div>
     );

@@ -7,3 +7,15 @@
   font-family: 'Roboto';
   background: #25C2A0;
 }
+@font-face
+{
+  font-family: Alegreya;
+  src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+}
+
+@font-face
+{
+  font-family: Alegreya;
+  src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+  font-style: italic;
+}
