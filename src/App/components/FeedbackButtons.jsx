@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import Style from '../Feedback.module.css';
+import Style from '../Style/Feedback.module.css';
 
 export const FeedbackButtons = ({ stateItemIncrement, buttons }) => {
   return (
